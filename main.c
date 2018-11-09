@@ -79,11 +79,13 @@ int main(int argc, char** argv)
         printf("hdrvis [image file.hdr]\n");
         exit(1);
     }
+     
+    char filePath[] = argv[1];
 
     // Inicialização da janela gráfica
     init(argc,argv);
 
-    FILE* arq = fopen("./assets/memorial.hdr","rb");
+    FILE* arq = fopen(filePath,"rb");
 
     RGBE_ReadHeader(arq, &sizeX, &sizeY, NULL);
 
