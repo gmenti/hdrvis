@@ -118,3 +118,9 @@
 1472593460 /home/15104300/Desktop/hdrvis/rgbe.h
 	<stdio.h>
 
+1541804153 source:/home/15104300/Desktop/hdrvis/main.c
+	<math.h>
+	<string.h>
+	"opengl.h"
+	"rgbe.h"
+

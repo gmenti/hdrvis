@@ -44,11 +44,21 @@ void process()
     //
     // SUBSTITUA este código pelos algoritmos a serem implementados
     //
+
+    printf("%f", fmin(1.0, 2));
+
     int pos;
     for(pos=0; pos<sizeX*sizeY; pos++) {
-        image8[pos].r = (unsigned char) (255 * exposure);
-        image8[pos].g = (unsigned char) (127 * exposure);
-        image8[pos].b = (unsigned char) (0 * exposure);
+        float r = image[pos].r * exposure;
+        float g = image[pos].g * exposure;
+        float b = image[pos].b * exposure;
+        float c = 0.5;
+        r = r / (r + c);
+        g = g / (g + c);
+        b = b / (b + c);
+        image8[pos].r = (unsigned char) (fmin(1.0,r) * 255);
+        image8[pos].g = (unsigned char) (fmin(1.0,g) * 255);
+        image8[pos].b = (unsigned char) (fmin(1.0,b) * 255);
     }
 
     //
@@ -67,31 +77,17 @@ int main(int argc, char** argv)
     // Inicialização da janela gráfica
     init(argc,argv);
 
-    //
-    // INCLUA aqui o código para LER a imagem de entrada
-    //
-    // Siga as orientações no enunciado para:
-    //
-    // 1. Descobrir o tamanho da imagem (ler header)
-    // 2. Ler os pixels
-    //
-
     FILE* arq = fopen("./assets/memorial.hdr","rb");
 
-    RGBE_ReadHeader(arq, &sizeY, &sizeX, NULL);
+    RGBE_ReadHeader(arq, &sizeX, &sizeY, NULL);
 
-    image = (RGBf*) malloc(sizeof(RGBf) * sizeY * sizeX);
+    image = (RGBf*) malloc(sizeof(RGBf) * sizeX * sizeY);
 
-    int result = RGBE_ReadPixels_RLE(arq, (float*)image, sizeY, sizeX);
+    int result = RGBE_ReadPixels_RLE(arq, (float*)image, sizeX, sizeY);
     if (result == RGBE_RETURN_FAILURE) {
-        // Tratamento de erro
+        printf("Erro de leitura dos pixels");
     }
     fclose(arq);
-
-    printf("%d x %d\n", sizeX, sizeY);
-
-    // Aloca imagem float
-    image = (RGBf *)malloc(sizeof(RGBf) * sizeX * sizeY);
 
     // Aloca memória para imagem de 24 bits
     image8 = (RGB8*) malloc(sizeof(RGB8) * sizeX * sizeY);
