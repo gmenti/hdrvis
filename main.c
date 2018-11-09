@@ -76,9 +76,17 @@ int main(int argc, char** argv)
     // 2. Ler os pixels
     //
 
-    // TESTE: cria uma imagem de 800x600
-    sizeX = 800;
-    sizeY = 600;
+    FILE* arq = fopen("./assets/memorial.hdr","rb");
+
+    RGBE_ReadHeader(arq, &sizeY, &sizeX, NULL);
+
+    image = (RGBf*) malloc(sizeof(RGBf) * sizeY * sizeX);
+
+    int result = RGBE_ReadPixels_RLE(arq, (float*)image, sizeY, sizeX);
+    if (result == RGBE_RETURN_FAILURE) {
+        // Tratamento de erro
+    }
+    fclose(arq);
 
     printf("%d x %d\n", sizeX, sizeY);
 
