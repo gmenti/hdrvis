@@ -52,18 +52,24 @@ void process()
         float r = image[pos].r * exposure;
         float g = image[pos].g * exposure;
         float b = image[pos].b * exposure;
-        float c = 0.5;
-        r = r / (r + c);
-        g = g / (g + c);
-        b = b / (b + c);
+
+        if (modo == SCALE) {
+            float c = 0.5;
+            r = r / (r + c);
+            g = g / (g + c);
+            b = b / (b + c);
+        } else if (modo == GAMMA) {
+            float lambda = 1.8;
+            r = fastpow(r, 1/lambda);
+            g = fastpow(g, 1/lambda);
+            b = fastpow(b, 1/lambda);
+        }
+
         image8[pos].r = (unsigned char) (fmin(1.0,r) * 255);
         image8[pos].g = (unsigned char) (fmin(1.0,g) * 255);
         image8[pos].b = (unsigned char) (fmin(1.0,b) * 255);
     }
 
-    //
-    // NÃO ALTERAR A PARTIR DAQUI!!!!
-    //
     buildTex();
 }
 
