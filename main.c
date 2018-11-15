@@ -78,8 +78,13 @@ void process()
 int main(int argc, char** argv)
 {
     if(argc==1) {
-        printf("Argumento insuficiente. Digite o camainho de uma imagem a ser lida.\nExemplo: ./hdrvis imagem.hdr\n");
+        printf("Argumento insuficiente. Entre com -h para ajuda ou indique uma imagem a ser lida - exemplo: 'hdrvis imagem.hdr'\n");
         exit(1);
+    }
+
+    if(strcmp(argv[1],"-h")==0){
+      printf("Tecle 't' para usar tone mapping no modo scale, e 'g' para gama correction.\nUtilize as teclas direcionais 'direita' e 'esquerda' do teclado para modificar o fator de exposicao.\nPara execucao, passe como argumento o nome ou o caminho para a imagem desejada - por exemplo: 'hdrvids imagem.hdr'.\n");
+      exit(1);
     }
 
     char* filePath = argv[1];
