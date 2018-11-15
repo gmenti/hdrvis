@@ -6,7 +6,7 @@
 
 Execução a partir de arquivo compilado disponibilizado (Unix-Like):
 
-`./hdrvis imagem.hdr` -> executa programa.
+`./hdrvis imagem.hdr` -> executa programa abrindo imagem.hdr.
 
 `./hdrvis` -> exibe mensagem instrutiva de alerta: *Argumento insuficiente. Entre com -h para ajuda ou indique uma imagem a ser lida - exemplo: 'hdrvis imagem.hdr'*
 
