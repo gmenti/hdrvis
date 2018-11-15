@@ -53,18 +53,20 @@ void process()
         float g = image[pos].g * exposure;
         float b = image[pos].b * exposure;
 
+        //aplicação de tone mapping por escala
         if (modo == SCALE) {
             float c = 0.5;
             r = r / (r + c);
             g = g / (g + c);
             b = b / (b + c);
-        } else if (modo == GAMMA) {
+        } else if (modo == GAMMA) { //aplicação de tone mapping por gama
             float lambda = 1.8;
             r = fastpow(r, 1/lambda);
             g = fastpow(g, 1/lambda);
             b = fastpow(b, 1/lambda);
         }
 
+        //conversão para 24bits
         image8[pos].r = (unsigned char) (fmin(1.0,r) * 255);
         image8[pos].g = (unsigned char) (fmin(1.0,g) * 255);
         image8[pos].b = (unsigned char) (fmin(1.0,b) * 255);
@@ -76,11 +78,11 @@ void process()
 int main(int argc, char** argv)
 {
     if(argc==1) {
-        printf("hdrvis [image file.hdr]\n");
+        printf("Argumento insuficiente. Digite o camainho de uma imagem a ser lida.\nExemplo: ./hdrvis imagem.hdr\n");
         exit(1);
     }
-     
-    char filePath[] = argv[1];
+
+    char* filePath = argv[1];
 
     // Inicialização da janela gráfica
     init(argc,argv);
@@ -109,4 +111,3 @@ int main(int argc, char** argv)
     glutMainLoop();
     return 0;
 }
-
